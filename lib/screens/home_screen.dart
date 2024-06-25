@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_to_fifty/widgets/play_button_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,18 +37,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.play_arrow_rounded, size: 80),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder?>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                    ),
-                  ),
-                ),
+                const PlayButton(),
               ],
             ),
           ),
