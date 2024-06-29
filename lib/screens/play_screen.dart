@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:one_to_fifty/services/play_service.dart';
+import 'package:one_to_fifty/widgets/number_button_widget.dart';
 
 class PlayScreen extends StatefulWidget {
   const PlayScreen({super.key});
@@ -14,15 +15,20 @@ class _PlayScreenState extends State<PlayScreen> {
   late List<int> numbers;
   int currentNumber = 1;
 
+  final List<bool> isVisibles = List.filled(25, true);
+
   @override
   void initState() {
     super.initState();
-    numbers = firstNumbers;
+    numbers = List.from(firstNumbers);
   }
 
   void onNumberPressed(int index) {
     if (numbers[index] == currentNumber) {
       setState(() {
+        if (currentNumber > 25) {
+          isVisibles[index] = false;
+        }
         numbers[index] = secondNumbers[index];
         currentNumber++;
       });
@@ -55,22 +61,12 @@ class _PlayScreenState extends State<PlayScreen> {
                 ),
                 itemCount: 25,
                 itemBuilder: (context, index) {
-                  return TextButton(
-                    onPressed: () => onNumberPressed(index),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder?>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      '${numbers[index]}',
-                      style: const TextStyle(fontSize: 40),
-                    ),
-                  );
+                  return isVisibles[index]
+                      ? NumberButton(
+                          number: numbers[index],
+                          onPressed: () => onNumberPressed(index),
+                        )
+                      : const SizedBox.shrink();
                 },
               ),
             ),
