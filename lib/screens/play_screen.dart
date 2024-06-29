@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:one_to_fifty/services/play_service.dart';
 
 class PlayScreen extends StatelessWidget {
-  const PlayScreen({super.key});
+  PlayScreen({super.key});
+
+  final numbers = PlayService().getRandomNumbers();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class PlayScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      '${index + 1}',
+                      '${numbers[index]}',
                       style: const TextStyle(fontSize: 40),
                     ),
                   );
