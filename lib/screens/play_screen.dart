@@ -9,15 +9,21 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> {
-  final List<int> numbers = PlayService().getRandomNumbers();
-
+  final List<int> firstNumbers = PlayService().getRandomNumbers(1);
+  final List<int> secondNumbers = PlayService().getRandomNumbers(2);
+  late List<int> numbers;
   int currentNumber = 1;
 
-  // GridView.builder에서 사용할 onPressed 콜백 함수
+  @override
+  void initState() {
+    super.initState();
+    numbers = firstNumbers;
+  }
+
   void onNumberPressed(int index) {
     if (numbers[index] == currentNumber) {
       setState(() {
-        numbers[index] += 25;
+        numbers[index] = secondNumbers[index];
         currentNumber++;
       });
     }

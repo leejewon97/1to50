@@ -13,7 +13,7 @@ class PlayButton extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PlayScreen(),
+              builder: (context) => const PlayScreen(),
             ));
       },
       icon: const Icon(Icons.play_arrow_rounded, size: 80),
