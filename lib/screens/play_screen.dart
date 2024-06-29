@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 
-class PlayScreen extends StatelessWidget {
-  PlayScreen({super.key});
+class PlayScreen extends StatefulWidget {
+  const PlayScreen({super.key});
 
-  final numbers = PlayService().getRandomNumbers();
+  @override
+  State<PlayScreen> createState() => _PlayScreenState();
+}
+
+class _PlayScreenState extends State<PlayScreen> {
+  final List<int> numbers = PlayService().getRandomNumbers();
+
+  int currentNumber = 1;
+
+  // GridView.builder에서 사용할 onPressed 콜백 함수
+  void onNumberPressed(int index) {
+    if (numbers[index] == currentNumber) {
+      setState(() {
+        numbers[index] += 25;
+        currentNumber++;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +29,11 @@ class PlayScreen extends StatelessWidget {
       backgroundColor: Colors.amber[100],
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             child: Center(
               child: Text(
-                '1',
-                style: TextStyle(fontSize: 60),
+                '$currentNumber',
+                style: const TextStyle(fontSize: 60),
               ),
             ),
           ),
@@ -33,7 +50,7 @@ class PlayScreen extends StatelessWidget {
                 itemCount: 25,
                 itemBuilder: (context, index) {
                   return TextButton(
-                    onPressed: () {},
+                    onPressed: () => onNumberPressed(index),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder?>(
                         RoundedRectangleBorder(
