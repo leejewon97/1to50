@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/number_button_widget.dart';
 
@@ -17,10 +18,34 @@ class _PlayScreenState extends State<PlayScreen> {
 
   final List<bool> isVisibles = List.filled(25, true);
 
+  late Ticker ticker;
+  Duration playTime = Duration.zero;
+
   @override
   void initState() {
     super.initState();
     numbers = List.from(firstNumbers);
+    ticker = Ticker((elapsed) {
+      setState(() {
+        playTime = elapsed;
+      });
+    })
+      ..start();
+  }
+
+  @override
+  void dispose() {
+    ticker.dispose();
+    super.dispose();
+  }
+
+  String timeFormatter(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    final centiseconds =
+        twoDigits(duration.inMilliseconds.remainder(1000) ~/ 10);
+    return "$minutes:$seconds:$centiseconds";
   }
 
   void onNumberPressed(int index) {
@@ -71,18 +96,19 @@ class _PlayScreenState extends State<PlayScreen> {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Center(
               child: Text(
-                '00 : 00',
-                style: TextStyle(fontSize: 60),
+                timeFormatter(playTime),
+                style: const TextStyle(fontSize: 60),
               ),
             ),
           ),
           Expanded(
             child: Center(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () =>
+                    ticker.isTicking ? ticker.stop() : ticker.start(),
                 icon: const Icon(Icons.pause_rounded, size: 80),
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<OutlinedBorder?>(
