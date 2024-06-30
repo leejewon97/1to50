@@ -20,6 +20,7 @@ class _PlayScreenState extends State<PlayScreen> {
 
   late Ticker ticker;
   Duration playTime = Duration.zero;
+  Duration pausedTime = Duration.zero;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _PlayScreenState extends State<PlayScreen> {
     numbers = List.from(firstNumbers);
     ticker = Ticker((elapsed) {
       setState(() {
-        playTime = elapsed;
+        playTime = elapsed + pausedTime;
       });
     })
       ..start();
@@ -107,8 +108,12 @@ class _PlayScreenState extends State<PlayScreen> {
           Expanded(
             child: Center(
               child: IconButton(
-                onPressed: () =>
-                    ticker.isTicking ? ticker.stop() : ticker.start(),
+                onPressed: () => ticker.isTicking
+                    ? setState(() {
+                        pausedTime = playTime;
+                        ticker.stop();
+                      })
+                    : ticker.start(),
                 icon: const Icon(Icons.pause_rounded, size: 80),
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<OutlinedBorder?>(
