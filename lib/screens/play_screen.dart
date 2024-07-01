@@ -4,7 +4,12 @@ import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/number_button_widget.dart';
 
 class PlayScreen extends StatefulWidget {
-  const PlayScreen({super.key});
+  final ButtonStyle buttonStyle;
+
+  const PlayScreen({
+    super.key,
+    required this.buttonStyle,
+  });
 
   @override
   State<PlayScreen> createState() => _PlayScreenState();
@@ -91,6 +96,7 @@ class _PlayScreenState extends State<PlayScreen> {
                       ? NumberButton(
                           number: numbers[index],
                           onPressed: () => onNumberPressed(index),
+                          buttonStyle: widget.buttonStyle,
                         )
                       : const SizedBox.shrink();
                 },
@@ -115,14 +121,7 @@ class _PlayScreenState extends State<PlayScreen> {
                       })
                     : ticker.start(),
                 icon: const Icon(Icons.pause_rounded, size: 80),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<OutlinedBorder?>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: const BorderSide(color: Colors.black, width: 2.0),
-                    ),
-                  ),
-                ),
+                style: widget.buttonStyle,
               ),
             ),
           ),

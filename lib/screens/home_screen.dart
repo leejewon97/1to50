@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:one_to_fifty/widgets/play_button_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final ButtonStyle buttonStyle;
+
+  const HomeScreen({
+    super.key,
+    required this.buttonStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +33,11 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {},
                   icon:
                       const Icon(Icons.format_list_numbered_rounded, size: 80),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder?>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: const BorderSide(color: Colors.black, width: 2.0),
-                      ),
-                    ),
-                  ),
+                  style: buttonStyle,
                 ),
-                const PlayButton(),
+                PlayButton(
+                  buttonStyle: buttonStyle,
+                ),
               ],
             ),
           ),

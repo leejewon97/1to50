@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:one_to_fifty/screens/play_screen.dart';
 
 class PlayButton extends StatelessWidget {
+  final ButtonStyle buttonStyle;
+
   const PlayButton({
     super.key,
+    required this.buttonStyle,
   });
 
   @override
@@ -13,18 +16,11 @@ class PlayButton extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PlayScreen(),
+              builder: (context) => PlayScreen(buttonStyle: buttonStyle),
             ));
       },
       icon: const Icon(Icons.play_arrow_rounded, size: 80),
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<OutlinedBorder?>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            side: const BorderSide(color: Colors.black, width: 2.0),
-          ),
-        ),
-      ),
+      style: buttonStyle,
     );
   }
 }
