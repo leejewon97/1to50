@@ -19,7 +19,9 @@ class NumberButton extends StatelessWidget {
       style: buttonStyle,
       child: Text(
         '$number',
-        style: const TextStyle(fontSize: 40),
+        style: const TextStyle(
+          fontSize: 40,
+        ),
       ),
     );
   }

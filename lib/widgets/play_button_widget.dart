@@ -19,7 +19,10 @@ class PlayButton extends StatelessWidget {
               builder: (context) => PlayScreen(buttonStyle: buttonStyle),
             ));
       },
-      icon: const Icon(Icons.play_arrow_rounded, size: 80),
+      icon: const Icon(
+        Icons.play_arrow_rounded,
+        size: 80,
+      ),
       style: buttonStyle,
     );
   }

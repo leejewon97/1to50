@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
+import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_button_widget.dart';
 
 class PlayScreen extends StatefulWidget {
@@ -60,8 +61,21 @@ class _PlayScreenState extends State<PlayScreen> {
         if (currentNumber > 25) {
           isVisibles[index] = false;
         }
-        numbers[index] = secondNumbers[index];
-        currentNumber++;
+        if (currentNumber == 50) {
+          ticker.stop();
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return EndDialog(
+                playTime: timeFormatter(playTime),
+              );
+            },
+          );
+        } else {
+          numbers[index] = secondNumbers[index];
+          currentNumber++;
+        }
       });
     }
   }
@@ -120,7 +134,10 @@ class _PlayScreenState extends State<PlayScreen> {
                         ticker.stop();
                       })
                     : ticker.start(),
-                icon: const Icon(Icons.pause_rounded, size: 80),
+                icon: const Icon(
+                  Icons.pause_rounded,
+                  size: 80,
+                ),
                 style: widget.buttonStyle,
               ),
             ),
