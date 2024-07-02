@@ -14,15 +14,20 @@ class NumberButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: buttonStyle,
-      child: Text(
-        '$number',
-        style: const TextStyle(
-          fontSize: 40,
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return TextButton(
+          onPressed: onPressed,
+          style: buttonStyle,
+          child: Text(
+            '$number',
+            style: TextStyle(
+              // 버튼 크기에 맞게 폰트 크기 조정
+              fontSize: constraints.maxWidth / 2,
+            ),
+          ),
+        );
+      },
     );
   }
 }
