@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_button_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayScreen extends StatefulWidget {
   final ButtonStyle buttonStyle;
@@ -28,6 +29,9 @@ class _PlayScreenState extends State<PlayScreen> {
   Duration playTime = Duration.zero;
   Duration pausedTime = Duration.zero;
 
+  late SharedPreferences prefs;
+  String? bestTime;
+
   @override
   void initState() {
     super.initState();
@@ -38,12 +42,18 @@ class _PlayScreenState extends State<PlayScreen> {
       });
     })
       ..start();
+    initPrefs();
   }
 
   @override
   void dispose() {
     ticker.dispose();
     super.dispose();
+  }
+
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    bestTime = prefs.getString('bestTime');
   }
 
   String timeFormatter(Duration duration) {
@@ -69,6 +79,8 @@ class _PlayScreenState extends State<PlayScreen> {
             builder: (context) {
               return EndDialog(
                 playTime: timeFormatter(playTime),
+                oldBestTime: bestTime ?? timeFormatter(playTime),
+                prefs: prefs,
               );
             },
           );
