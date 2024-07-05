@@ -7,10 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayScreen extends StatefulWidget {
   final ButtonStyle buttonStyle;
+  final SharedPreferences prefs;
 
   const PlayScreen({
     super.key,
     required this.buttonStyle,
+    required this.prefs,
   });
 
   @override
@@ -29,8 +31,7 @@ class _PlayScreenState extends State<PlayScreen> {
   Duration playTime = Duration.zero;
   Duration pausedTime = Duration.zero;
 
-  late SharedPreferences prefs;
-  String? bestTime;
+  List<String> recordTimes = [];
 
   @override
   void initState() {
@@ -42,18 +43,13 @@ class _PlayScreenState extends State<PlayScreen> {
       });
     })
       ..start();
-    initPrefs();
+    recordTimes = widget.prefs.getStringList('recordTimes') ?? [];
   }
 
   @override
   void dispose() {
     ticker.dispose();
     super.dispose();
-  }
-
-  Future<void> initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-    bestTime = prefs.getString('bestTime');
   }
 
   String timeFormatter(Duration duration) {
@@ -79,8 +75,8 @@ class _PlayScreenState extends State<PlayScreen> {
             builder: (context) {
               return EndDialog(
                 playTime: timeFormatter(playTime),
-                oldBestTime: bestTime ?? timeFormatter(playTime),
-                prefs: prefs,
+                recordTimes: recordTimes,
+                prefs: widget.prefs,
               );
             },
           );

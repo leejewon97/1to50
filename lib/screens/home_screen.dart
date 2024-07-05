@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:one_to_fifty/widgets/play_button_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   final ButtonStyle buttonStyle;
+  final SharedPreferences prefs;
 
   const HomeScreen({
     super.key,
     required this.buttonStyle,
+    required this.prefs,
   });
 
   @override
@@ -37,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 PlayButton(
                   buttonStyle: buttonStyle,
+                  prefs: prefs,
                 ),
               ],
             ),

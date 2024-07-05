@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:one_to_fifty/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final buttonStyle = ButtonStyle(
     shape: MaterialStateProperty.all<OutlinedBorder?>(
       RoundedRectangleBorder(
@@ -17,6 +23,19 @@ class MyApp extends StatelessWidget {
     ),
   );
 
+  late SharedPreferences prefs;
+
+  @override
+  initState() {
+    super.initState();
+    initPrefs();
+  }
+
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {});
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -24,6 +43,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: HomeScreen(
         buttonStyle: buttonStyle,
+        prefs: prefs,
       ),
     );
   }

@@ -1,16 +1,17 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class EndDialog extends StatefulWidget {
   final String playTime;
-  final String oldBestTime;
+  final List<String> recordTimes;
   final SharedPreferences prefs;
 
   const EndDialog({
     super.key,
     required this.playTime,
-    required this.oldBestTime,
+    required this.recordTimes,
     required this.prefs,
   });
 
@@ -21,20 +22,25 @@ class EndDialog extends StatefulWidget {
 class _EndDialogState extends State<EndDialog> {
   bool isBestTime = false;
   String newBestTime = "";
+  String oldBestTime = "";
 
   @override
   void initState() {
     super.initState();
-    newBestTime = widget.oldBestTime;
-    if (widget.playTime.compareTo(widget.oldBestTime) <= 0) {
+    oldBestTime = widget.recordTimes.firstOrNull ?? widget.playTime;
+    newBestTime = oldBestTime;
+    if (widget.playTime.compareTo(oldBestTime) <= 0) {
       isBestTime = true;
       newBestTime = widget.playTime;
-      replaceBestTime();
     }
+    updateRecordTimes();
   }
 
-  Future<void> replaceBestTime() async {
-    await widget.prefs.setString('bestTime', newBestTime);
+  Future<void> updateRecordTimes() async {
+    await widget.prefs.setStringList(
+      'recordTimes',
+      [...widget.recordTimes, widget.playTime].sorted((a, b) => a.compareTo(b)),
+    );
   }
 
   @override
