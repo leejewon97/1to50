@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:one_to_fifty/widgets/play_button_widget.dart';
+import 'package:one_to_fifty/widgets/record_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -32,11 +33,9 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon:
-                      const Icon(Icons.format_list_numbered_rounded, size: 80),
-                  style: buttonStyle,
+                RecordButton(
+                  buttonStyle: buttonStyle,
+                  prefs: prefs,
                 ),
                 PlayButton(
                   buttonStyle: buttonStyle,
