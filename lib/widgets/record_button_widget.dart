@@ -20,6 +20,7 @@ class RecordButton extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => RecordScreen(
+                buttonStyle: buttonStyle,
                 prefs: prefs,
               ),
             ));

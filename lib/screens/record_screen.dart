@@ -3,10 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RecordScreen extends StatelessWidget {
   final SharedPreferences prefs;
+  final ButtonStyle buttonStyle;
 
   const RecordScreen({
     super.key,
     required this.prefs,
+    required this.buttonStyle,
   });
 
   @override
@@ -27,7 +29,7 @@ class RecordScreen extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 3,
+            flex: 2,
             child: ListView.builder(
               itemCount: recordTimes.length,
               itemBuilder: (context, index) {
@@ -40,6 +42,21 @@ class RecordScreen extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Center(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  size: 80,
+                ),
+                style: buttonStyle,
+              ),
             ),
           ),
         ],

@@ -20,7 +20,11 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           const Flexible(
-            flex: 3,
+            flex: 1,
+            child: SizedBox.expand(),
+          ),
+          const Flexible(
+            flex: 2,
             child: Center(
               child: Text(
                 '1 to 50',
@@ -29,19 +33,21 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                RecordButton(
-                  buttonStyle: buttonStyle,
-                  prefs: prefs,
-                ),
-                PlayButton(
-                  buttonStyle: buttonStyle,
-                  prefs: prefs,
-                ),
-              ],
+            flex: 2,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RecordButton(
+                    buttonStyle: buttonStyle,
+                    prefs: prefs,
+                  ),
+                  PlayButton(
+                    buttonStyle: buttonStyle,
+                    prefs: prefs,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
