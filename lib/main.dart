@@ -23,17 +23,12 @@ class _MyAppState extends State<MyApp> {
     ),
   );
 
-  late SharedPreferences prefs;
+  late Future<SharedPreferences> prefs;
 
   @override
   initState() {
     super.initState();
-    initPrefs();
-  }
-
-  Future<void> initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {});
+    prefs = SharedPreferences.getInstance();
   }
 
   // This widget is the root of your application.
@@ -41,9 +36,23 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(
-        buttonStyle: buttonStyle,
-        prefs: prefs,
+      home: FutureBuilder(
+        future: prefs,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HomeScreen(
+              buttonStyle: buttonStyle,
+              prefs: snapshot.data!,
+            );
+          } else {
+            return Scaffold(
+              backgroundColor: Colors.amber[100],
+              body: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     );
   }
