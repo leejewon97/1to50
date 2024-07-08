@@ -22,7 +22,6 @@ class NumberButton extends StatelessWidget {
           child: Text(
             '$number',
             style: TextStyle(
-              // 버튼 크기에 맞게 폰트 크기 조정
               fontSize: constraints.maxWidth / 2,
             ),
           ),

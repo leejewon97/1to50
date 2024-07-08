@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
-import 'package:one_to_fifty/widgets/number_button_widget.dart';
+import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
+import 'package:one_to_fifty/widgets/when_paused_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayScreen extends StatefulWidget {
@@ -105,24 +106,17 @@ class _PlayScreenState extends State<PlayScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Center(
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                ),
-                itemCount: 25,
-                itemBuilder: (context, index) {
-                  return isVisibles[index]
-                      ? NumberButton(
-                          number: numbers[index],
-                          onPressed: () => onNumberPressed(index),
-                          buttonStyle: widget.buttonStyle,
-                        )
-                      : const SizedBox.shrink();
-                },
-              ),
+              child: ticker.isTicking
+                  ? NumberButtonsBuilder(
+                      numbers: numbers,
+                      isVisibles: isVisibles,
+                      buttonStyle: widget.buttonStyle,
+                      onNumberPressed: onNumberPressed,
+                    )
+                  : WhenPaused(
+                      buttonStyle: widget.buttonStyle,
+                      prefs: widget.prefs,
+                    ),
             ),
           ),
           Expanded(
@@ -142,8 +136,10 @@ class _PlayScreenState extends State<PlayScreen> {
                         ticker.stop();
                       })
                     : ticker.start(),
-                icon: const Icon(
-                  Icons.pause_rounded,
+                icon: Icon(
+                  ticker.isTicking
+                      ? Icons.pause_rounded
+                      : Icons.play_arrow_rounded,
                   size: 80,
                 ),
                 style: widget.buttonStyle,
