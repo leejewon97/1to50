@@ -78,6 +78,7 @@ class _PlayScreenState extends State<PlayScreen> {
                 playTime: timeFormatter(playTime),
                 recordTimes: recordTimes,
                 prefs: widget.prefs,
+                buttonStyle: widget.buttonStyle,
               );
             },
           );

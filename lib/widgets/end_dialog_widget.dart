@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:one_to_fifty/screens/play_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -7,12 +8,14 @@ class EndDialog extends StatefulWidget {
   final String playTime;
   final List<String> recordTimes;
   final SharedPreferences prefs;
+  final ButtonStyle buttonStyle;
 
   const EndDialog({
     super.key,
     required this.playTime,
     required this.recordTimes,
     required this.prefs,
+    required this.buttonStyle,
   });
 
   @override
@@ -45,48 +48,68 @@ class _EndDialogState extends State<EndDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        isBestTime ? '최고 기록 경신 !' : '게임 종료',
-        style: const TextStyle(
-          fontSize: 32,
-        ),
-        textAlign: TextAlign.center,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '최고 기록 : $newBestTime',
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
+    return PopScope(
+      canPop: false,
+      child: AlertDialog(
+        title: Text(
+          isBestTime ? '최고 기록 경신 !' : '게임 종료',
+          style: const TextStyle(
+            fontSize: 32,
           ),
-          Text(
-            widget.playTime,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '최고 기록 : $newBestTime',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
+            Text(
+              widget.playTime,
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        contentPadding: const EdgeInsets.only(top: 20, bottom: 10),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlayScreen(
+                      buttonStyle: widget.buttonStyle,
+                      prefs: widget.prefs,
+                    ),
+                  ));
+            },
+            icon: const Icon(
+              Icons.refresh_rounded,
+              size: 40,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.home_rounded,
+              size: 40,
+            ),
           ),
         ],
       ),
-      contentPadding: const EdgeInsets.only(top: 20, bottom: 10),
-      actionsAlignment: MainAxisAlignment.center,
-      actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.home_rounded,
-            size: 40,
-          ),
-        ),
-      ],
     );
   }
 }
