@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:one_to_fifty/widgets/number_button_widget.dart';
+import 'package:one_to_fifty/widgets/buttons/number_button_widget.dart';
 
 class NumberButtonsBuilder extends StatelessWidget {
   final List<int> numbers;

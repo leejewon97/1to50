@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:one_to_fifty/screens/play_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class RestartButton extends StatelessWidget {
+  const RestartButton({
+    super.key,
+    required this.buttonStyle,
+    required this.prefs,
+  });
+
+  final ButtonStyle buttonStyle;
+  final SharedPreferences prefs;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlayScreen(
+                buttonStyle: buttonStyle,
+                prefs: prefs,
+              ),
+            ));
+      },
+      icon: const Icon(
+        Icons.refresh_rounded,
+        size: 40,
+      ),
+    );
+  }
+}

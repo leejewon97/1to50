@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:one_to_fifty/widgets/play_button_widget.dart';
-import 'package:one_to_fifty/widgets/record_button_widget.dart';
+import 'package:one_to_fifty/widgets/buttons/play_button_widget.dart';
+import 'package:one_to_fifty/widgets/buttons/record_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:one_to_fifty/screens/play_screen.dart';
+import 'package:one_to_fifty/widgets/buttons/home_button_widget.dart';
+import 'package:one_to_fifty/widgets/buttons/restart_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -28,36 +29,13 @@ class WhenPausedDialog extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        // contentPadding: const EdgeInsets.only(top: 20, bottom: 10),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PlayScreen(
-                      buttonStyle: buttonStyle,
-                      prefs: prefs,
-                    ),
-                  ));
-            },
-            icon: const Icon(
-              Icons.refresh_rounded,
-              size: 40,
-            ),
+          RestartButton(
+            buttonStyle: buttonStyle,
+            prefs: prefs,
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.home_rounded,
-              size: 40,
-            ),
-          ),
+          const HomeButton(),
           IconButton(
             onPressed: () {
               Navigator.pop(context);
