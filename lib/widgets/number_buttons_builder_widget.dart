@@ -18,6 +18,7 @@ class NumberButtonsBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5,

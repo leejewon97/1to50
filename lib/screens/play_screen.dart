@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
-import 'package:one_to_fifty/widgets/when_paused_widget.dart';
+import 'package:one_to_fifty/widgets/when_paused_dialog_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayScreen extends StatefulWidget {
@@ -90,6 +90,28 @@ class _PlayScreenState extends State<PlayScreen> {
     }
   }
 
+  void whenPaused() {
+    if (ticker.isTicking) {
+      setState(() {
+        pausedTime = playTime;
+        ticker.stop();
+      });
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return WhenPausedDialog(
+            prefs: widget.prefs,
+            buttonStyle: widget.buttonStyle,
+            ticker: ticker,
+          );
+        },
+      );
+    } else {
+      ticker.start();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,10 +136,11 @@ class _PlayScreenState extends State<PlayScreen> {
                       buttonStyle: widget.buttonStyle,
                       onNumberPressed: onNumberPressed,
                     )
-                  : WhenPaused(
-                      buttonStyle: widget.buttonStyle,
-                      prefs: widget.prefs,
-                    ),
+                  : LayoutBuilder(builder: (context, constraints) {
+                      return SizedBox(
+                        height: constraints.maxWidth,
+                      );
+                    }),
             ),
           ),
           Expanded(
@@ -130,21 +153,16 @@ class _PlayScreenState extends State<PlayScreen> {
           ),
           Expanded(
             child: Center(
-              child: IconButton(
-                onPressed: () => ticker.isTicking
-                    ? setState(() {
-                        pausedTime = playTime;
-                        ticker.stop();
-                      })
-                    : ticker.start(),
-                icon: Icon(
-                  ticker.isTicking
-                      ? Icons.pause_rounded
-                      : Icons.play_arrow_rounded,
-                  size: 80,
-                ),
-                style: widget.buttonStyle,
-              ),
+              child: ticker.isTicking
+                  ? IconButton(
+                      onPressed: whenPaused,
+                      icon: const Icon(
+                        Icons.pause_rounded,
+                        size: 80,
+                      ),
+                      style: widget.buttonStyle,
+                    )
+                  : const SizedBox.shrink(),
             ),
           ),
         ],
