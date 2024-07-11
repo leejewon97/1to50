@@ -41,12 +41,26 @@ class _PlayScreenState extends State<PlayScreen> {
     super.initState();
     numbers = List.from(firstNumbers);
     ticker = Ticker((elapsed) {
-      setState(() {
-        playTime = elapsed + pausedTime;
-      });
+      if (countdown.inSeconds > 0) {
+        setState(() {
+          countdown = const Duration(seconds: 4) - elapsed;
+        });
+      } else {
+        tickerUpdateToStart();
+      }
     })
       ..start();
     recordTimes = widget.prefs.getStringList('recordTimes') ?? [];
+  }
+
+  void tickerUpdateToStart() {
+    ticker.stop();
+    ticker = Ticker((elapsed) {
+      setState(() {
+        playTime = pausedTime + elapsed;
+      });
+    })
+      ..start();
   }
 
   @override
