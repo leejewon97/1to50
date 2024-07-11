@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
+import 'package:one_to_fifty/widgets/countdown_widget.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
 import 'package:one_to_fifty/widgets/when_paused_dialog_widget.dart';
@@ -31,6 +32,7 @@ class _PlayScreenState extends State<PlayScreen> {
   late Ticker ticker;
   Duration playTime = Duration.zero;
   Duration pausedTime = Duration.zero;
+  Duration countdown = const Duration(seconds: 4);
 
   List<String> recordTimes = [];
 
@@ -114,56 +116,68 @@ class _PlayScreenState extends State<PlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber[100],
-      body: Column(
+    return PopScope(
+      canPop: false,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Expanded(
-            child: Center(
-              child: Text(
-                '$currentNumber',
-                style: const TextStyle(fontSize: 60),
-              ),
+          Scaffold(
+            backgroundColor: Colors.amber[100],
+            body: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '$currentNumber',
+                      style: const TextStyle(fontSize: 60),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Center(
+                    child: ticker.isTicking
+                        ? NumberButtonsBuilder(
+                            numbers: numbers,
+                            isVisibles: isVisibles,
+                            buttonStyle: widget.buttonStyle,
+                            onNumberPressed: onNumberPressed,
+                          )
+                        : LayoutBuilder(builder: (context, constraints) {
+                            return SizedBox(
+                              height: constraints.maxWidth,
+                            );
+                          }),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      timeFormatter(playTime),
+                      style: const TextStyle(fontSize: 60),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: ticker.isTicking
+                        ? IconButton(
+                            onPressed: whenPaused,
+                            icon: const Icon(
+                              Icons.pause_rounded,
+                              size: 80,
+                            ),
+                            style: widget.buttonStyle,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Center(
-              child: ticker.isTicking
-                  ? NumberButtonsBuilder(
-                      numbers: numbers,
-                      isVisibles: isVisibles,
-                      buttonStyle: widget.buttonStyle,
-                      onNumberPressed: onNumberPressed,
-                    )
-                  : LayoutBuilder(builder: (context, constraints) {
-                      return SizedBox(
-                        height: constraints.maxWidth,
-                      );
-                    }),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                timeFormatter(playTime),
-                style: const TextStyle(fontSize: 60),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: ticker.isTicking
-                  ? IconButton(
-                      onPressed: whenPaused,
-                      icon: const Icon(
-                        Icons.pause_rounded,
-                        size: 80,
-                      ),
-                      style: widget.buttonStyle,
-                    )
-                  : const SizedBox.shrink(),
-            ),
+          Visibility(
+            visible: countdown.inSeconds > 0,
+            child: Conutdown(countdown: countdown),
           ),
         ],
       ),
