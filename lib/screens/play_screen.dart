@@ -88,7 +88,7 @@ class _PlayScreenState extends State<PlayScreen> {
     return "$minutes:$seconds:$centiseconds";
   }
 
-  void onNumberPressed(int index) {
+  void onNumberTapDown(int index) {
     if (numbers[index] == currentNumber) {
       setState(() {
         if (currentNumber > 25) {
@@ -171,8 +171,7 @@ class _PlayScreenState extends State<PlayScreen> {
                         ? NumberButtonsBuilder(
                             numbers: numbers,
                             isVisibles: isVisibles,
-                            buttonStyle: widget.buttonStyle,
-                            onNumberPressed: onNumberPressed,
+                            onNumberTapDown: onNumberTapDown,
                           )
                         : LayoutBuilder(builder: (context, constraints) {
                             return SizedBox(

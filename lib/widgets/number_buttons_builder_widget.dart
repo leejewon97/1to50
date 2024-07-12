@@ -4,15 +4,13 @@ import 'package:one_to_fifty/widgets/buttons/number_button_widget.dart';
 class NumberButtonsBuilder extends StatelessWidget {
   final List<int> numbers;
   final List<bool> isVisibles;
-  final ButtonStyle buttonStyle;
-  final Function(int) onNumberPressed;
+  final Function(int) onNumberTapDown;
 
   const NumberButtonsBuilder({
     super.key,
     required this.numbers,
     required this.isVisibles,
-    required this.buttonStyle,
-    required this.onNumberPressed,
+    required this.onNumberTapDown,
   });
 
   @override
@@ -30,8 +28,7 @@ class NumberButtonsBuilder extends StatelessWidget {
         return isVisibles[index]
             ? NumberButton(
                 number: numbers[index],
-                onPressed: () => onNumberPressed(index),
-                buttonStyle: buttonStyle,
+                onNumberTapDown: (_) => onNumberTapDown(index),
               )
             : const SizedBox.shrink();
       },
