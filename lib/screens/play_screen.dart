@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/countdown_widget.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
 import 'package:one_to_fifty/widgets/when_paused_dialog_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soundpool/soundpool.dart';
 
 class PlayScreen extends StatefulWidget {
   final ButtonStyle buttonStyle;
@@ -36,6 +38,9 @@ class _PlayScreenState extends State<PlayScreen> {
 
   List<String> recordTimes = [];
 
+  Soundpool soundpool = Soundpool.fromOptions();
+  late Future<Map<String, int>> soundIds;
+
   @override
   void initState() {
     super.initState();
@@ -48,9 +53,30 @@ class _PlayScreenState extends State<PlayScreen> {
       } else {
         tickerUpdateToStart();
       }
-    })
-      ..start();
+    });
+
+    initSoundIds().then((_) {
+      soundIds.then((ids) {
+        soundpool.play(ids['countdown']!);
+        ticker.start();
+      });
+    });
+
     recordTimes = widget.prefs.getStringList('recordTimes') ?? [];
+  }
+
+  Future<void> initSoundIds() async {
+    var loadSounds = {
+      'tap': await loadSound('assets/sounds/tap.mp3'),
+      'wrong': await loadSound('assets/sounds/wrong.mp3'),
+      'countdown': await loadSound('assets/sounds/countdown.wav'),
+    };
+    soundIds = Future.value(loadSounds);
+  }
+
+  Future<int> loadSound(String file) async {
+    var soundData = await rootBundle.load(file);
+    return await soundpool.load(soundData);
   }
 
   void tickerUpdateToStart() {
@@ -102,6 +128,13 @@ class _PlayScreenState extends State<PlayScreen> {
           numbers[index] = secondNumbers[index];
           currentNumber++;
         }
+      });
+      soundIds.then((sounds) {
+        soundpool.play(sounds['tap']!);
+      });
+    } else {
+      soundIds.then((sounds) {
+        soundpool.play(sounds['wrong']!);
       });
     }
   }
@@ -190,7 +223,7 @@ class _PlayScreenState extends State<PlayScreen> {
             ),
           ),
           Visibility(
-            visible: countdown.inSeconds > 0,
+            visible: [1, 2, 3].contains(countdown.inSeconds),
             child: Conutdown(countdown: countdown),
           ),
         ],
