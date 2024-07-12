@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/countdown_widget.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
@@ -55,28 +54,13 @@ class _PlayScreenState extends State<PlayScreen> {
       }
     });
 
-    initSoundIds().then((_) {
-      soundIds.then((ids) {
-        soundpool.play(ids['countdown']!);
-        ticker.start();
-      });
+    soundIds = PlayService().getSoundIds(soundpool);
+    soundIds.then((ids) {
+      soundpool.play(ids['countdown']!);
+      ticker.start();
     });
 
     recordTimes = widget.prefs.getStringList('recordTimes') ?? [];
-  }
-
-  Future<void> initSoundIds() async {
-    var loadSounds = {
-      'tap': await loadSound('assets/sounds/tap.mp3'),
-      'wrong': await loadSound('assets/sounds/wrong.mp3'),
-      'countdown': await loadSound('assets/sounds/countdown.wav'),
-    };
-    soundIds = Future.value(loadSounds);
-  }
-
-  Future<int> loadSound(String file) async {
-    var soundData = await rootBundle.load(file);
-    return await soundpool.load(soundData);
   }
 
   void tickerUpdateToStart() {
@@ -129,12 +113,12 @@ class _PlayScreenState extends State<PlayScreen> {
           currentNumber++;
         }
       });
-      soundIds.then((sounds) {
-        soundpool.play(sounds['tap']!);
+      soundIds.then((ids) {
+        soundpool.play(ids['tap']!);
       });
     } else {
-      soundIds.then((sounds) {
-        soundpool.play(sounds['wrong']!);
+      soundIds.then((ids) {
+        soundpool.play(ids['wrong']!);
       });
     }
   }
