@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
@@ -155,48 +156,58 @@ class _PlayScreenState extends State<PlayScreen> {
           Scaffold(
             backgroundColor: Colors.amber[100],
             body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
+                Flexible(
+                  flex: 1,
                   child: Center(
-                    child: Text(
+                    child: AutoSizeText(
                       '$currentNumber',
                       style: const TextStyle(fontSize: 60),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Center(
+                Flexible(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: ticker.isTicking
                         ? NumberButtonsBuilder(
                             numbers: numbers,
                             isVisibles: isVisibles,
                             onNumberTapDown: onNumberTapDown,
                           )
-                        : LayoutBuilder(builder: (context, constraints) {
-                            return SizedBox(
-                              height: constraints.maxWidth,
-                            );
-                          }),
+                        : LayoutBuilder(
+                            builder: (context, constraints) {
+                              return SizedBox(
+                                height: constraints.maxWidth,
+                              );
+                            },
+                          ),
                   ),
                 ),
-                Expanded(
+                Flexible(
+                  flex: 1,
                   child: Center(
-                    child: Text(
+                    child: AutoSizeText(
                       timeFormatter(playTime),
                       style: const TextStyle(fontSize: 60),
                     ),
                   ),
                 ),
-                Expanded(
+                Flexible(
+                  flex: 1,
                   child: Center(
                     child: ticker.isTicking
                         ? IconButton(
                             onPressed: whenPaused,
-                            icon: const Icon(
-                              Icons.pause_rounded,
-                              size: 80,
-                            ),
+                            icon:
+                                LayoutBuilder(builder: (context, constraints) {
+                              return Icon(
+                                Icons.pause_rounded,
+                                size: constraints.maxHeight * 0.75,
+                              );
+                            }),
                             style: widget.buttonStyle,
                           )
                         : const SizedBox.shrink(),

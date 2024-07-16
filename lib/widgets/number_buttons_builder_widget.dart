@@ -15,22 +15,29 @@ class NumberButtonsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 5,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
-      ),
-      itemCount: 25,
-      itemBuilder: (context, index) {
-        return isVisibles[index]
-            ? NumberButton(
-                number: numbers[index],
-                onNumberTapDown: (_) => onNumberTapDown(index),
-              )
-            : const SizedBox.shrink();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          width: constraints.maxHeight,
+          child: GridView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+            itemCount: 25,
+            itemBuilder: (context, index) {
+              return isVisibles[index]
+                  ? NumberButton(
+                      number: numbers[index],
+                      onNumberTapDown: (_) => onNumberTapDown(index),
+                    )
+                  : const SizedBox.shrink();
+            },
+          ),
+        );
       },
     );
   }
