@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_to_fifty/widgets/buttons/custom_back_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RecordScreen extends StatelessWidget {
@@ -47,15 +48,8 @@ class RecordScreen extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Center(
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_rounded,
-                  size: 80,
-                ),
-                style: buttonStyle,
+              child: CustomBackButton(
+                buttonStyle: buttonStyle,
               ),
             ),
           ),

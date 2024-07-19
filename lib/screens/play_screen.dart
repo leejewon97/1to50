@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
+import 'package:one_to_fifty/widgets/buttons/pause_button_widget.dart';
 import 'package:one_to_fifty/widgets/countdown_widget.dart';
 import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
@@ -199,16 +200,9 @@ class _PlayScreenState extends State<PlayScreen> {
                   flex: 1,
                   child: Center(
                     child: ticker.isTicking
-                        ? IconButton(
-                            onPressed: whenPaused,
-                            icon:
-                                LayoutBuilder(builder: (context, constraints) {
-                              return Icon(
-                                Icons.pause_rounded,
-                                size: constraints.maxHeight * 0.75,
-                              );
-                            }),
-                            style: widget.buttonStyle,
+                        ? PauseButton(
+                            buttonStyle: widget.buttonStyle,
+                            whenPaused: whenPaused,
                           )
                         : const SizedBox.shrink(),
                   ),
