@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:one_to_fifty/widgets/buttons/home_number_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/play_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/record_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,9 +25,25 @@ class HomeScreen extends StatelessWidget {
           const Flexible(
             flex: 2,
             child: Center(
-              child: AutoSizeText(
-                '1 to 50',
-                style: TextStyle(fontSize: 60),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  HomeNumberButton(
+                    number: '1',
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 32,
+                    ),
+                    child: AutoSizeText(
+                      'to',
+                      style: TextStyle(fontSize: 60),
+                    ),
+                  ),
+                  HomeNumberButton(
+                    number: '50',
+                  ),
+                ],
               ),
             ),
           ),
