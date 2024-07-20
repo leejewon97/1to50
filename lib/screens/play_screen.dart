@@ -94,7 +94,9 @@ class _PlayScreenState extends State<PlayScreen> {
     if (numbers[index] == currentNumber) {
       setState(() {
         if (currentNumber > 25) {
-          isVisibles[index] = false;
+          Future.delayed(const Duration(milliseconds: 200), () {
+            isVisibles[index] = false;
+          });
         }
         if (currentNumber == 50) {
           ticker.stop();
@@ -111,7 +113,9 @@ class _PlayScreenState extends State<PlayScreen> {
             },
           );
         } else {
-          numbers[index] = secondNumbers[index];
+          Future.delayed(const Duration(milliseconds: 200), () {
+            numbers[index] = secondNumbers[index];
+          });
           currentNumber++;
         }
       });
