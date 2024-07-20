@@ -20,19 +20,20 @@ class NumberButtonsBuilder extends StatelessWidget {
         return SizedBox(
           width: constraints.maxHeight,
           child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
             ),
             itemCount: 25,
             itemBuilder: (context, index) {
               return isVisibles[index]
                   ? NumberButton(
                       number: numbers[index],
-                      onNumberTapDown: (_) => onNumberTapDown(index),
+                      onNumberTapDown: () => onNumberTapDown(index),
                     )
                   : const SizedBox.shrink();
             },

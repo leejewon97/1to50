@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 class NumberButton extends StatelessWidget {
   final int number;
-  final Function(TapDownDetails) onNumberTapDown;
+  final Function()? onNumberTapDown;
 
   const NumberButton({
     super.key,
@@ -14,18 +14,16 @@ class NumberButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return GestureDetector(
-          onTapDown: onNumberTapDown,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
-              ),
+        return NeumorphicButton(
+          onPressed: onNumberTapDown,
+          style: NeumorphicStyle(
+            shape: NeumorphicShape.flat,
+            boxShape: NeumorphicBoxShape.roundRect(
+              BorderRadius.circular(20.0),
             ),
-            alignment: Alignment.center,
+          ),
+          padding: EdgeInsets.zero,
+          child: Center(
             child: Text(
               '$number',
               style: TextStyle(

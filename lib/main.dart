@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return NeumorphicApp(
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: prefs,
@@ -53,6 +53,12 @@ class _MyAppState extends State<MyApp> {
             );
           }
         },
+      ),
+      theme: NeumorphicThemeData(
+        baseColor: Colors.grey[300]!,
+      ),
+      darkTheme: NeumorphicThemeData(
+        baseColor: Colors.grey[300]!,
       ),
     );
   }

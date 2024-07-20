@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/services/play_service.dart';
 import 'package:one_to_fifty/widgets/buttons/pause_button_widget.dart';
@@ -155,7 +155,6 @@ class _PlayScreenState extends State<PlayScreen> {
         alignment: Alignment.center,
         children: [
           Scaffold(
-            backgroundColor: Colors.amber[100],
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -171,7 +170,7 @@ class _PlayScreenState extends State<PlayScreen> {
                 Flexible(
                   flex: 5,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.all(10.0),
                     child: ticker.isTicking
                         ? NumberButtonsBuilder(
                             numbers: numbers,
