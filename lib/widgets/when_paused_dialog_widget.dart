@@ -1,7 +1,7 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/widgets/buttons/home_button_widget.dart';
-import 'package:one_to_fifty/widgets/buttons/replay_button_widget.dart';
+import 'package:one_to_fifty/widgets/buttons/resume_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/restart_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +34,7 @@ class WhenPausedDialog extends StatelessWidget {
             prefs: prefs,
           ),
           const HomeButton(),
-          ReplayButton(
+          ResumeButton(
             ticker: ticker,
           ),
         ],

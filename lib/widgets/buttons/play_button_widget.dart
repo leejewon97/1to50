@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/neumorphic_button_style.dart';
 import 'package:one_to_fifty/screens/play_screen.dart';
+import 'package:one_to_fifty/widgets/responsive_button_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayButton extends StatelessWidget {
@@ -24,18 +25,8 @@ class PlayButton extends StatelessWidget {
             ));
       },
       style: NeumorphicButtonStyle(),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 80,
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Icon(
-              Icons.play_arrow_rounded,
-              size: constraints.maxHeight,
-            );
-          },
-        ),
+      child: const ResponsiveButtonChild(
+        icon: Icons.play_arrow_rounded,
       ),
     );
   }

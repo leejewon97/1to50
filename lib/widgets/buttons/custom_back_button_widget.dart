@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/neumorphic_button_style.dart';
+import 'package:one_to_fifty/widgets/responsive_button_child_widget.dart';
 
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({
@@ -13,18 +14,8 @@ class CustomBackButton extends StatelessWidget {
         Navigator.pop(context);
       },
       style: NeumorphicButtonStyle(),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 80,
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Icon(
-              Icons.arrow_back_rounded,
-              size: constraints.maxHeight,
-            );
-          },
-        ),
+      child: const ResponsiveButtonChild(
+        icon: Icons.arrow_back_rounded,
       ),
     );
   }
