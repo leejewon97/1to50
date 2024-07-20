@@ -152,7 +152,6 @@ class _PlayScreenState extends State<PlayScreen> {
     return PopScope(
       canPop: false,
       child: Stack(
-        alignment: Alignment.center,
         children: [
           Scaffold(
             body: Column(

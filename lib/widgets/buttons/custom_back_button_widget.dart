@@ -13,9 +13,18 @@ class CustomBackButton extends StatelessWidget {
         Navigator.pop(context);
       },
       style: NeumorphicButtonStyle(),
-      child: const Icon(
-        Icons.arrow_back_rounded,
-        size: 80,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 80,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Icon(
+              Icons.arrow_back_rounded,
+              size: constraints.maxHeight,
+            );
+          },
+        ),
       ),
     );
   }

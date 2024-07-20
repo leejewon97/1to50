@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/custom_back_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,41 +15,44 @@ class RecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> recordTimes = prefs.getStringList('recordTimes') ?? [];
 
-    return Scaffold(
-      body: Column(
-        children: [
-          const Flexible(
-            flex: 1,
-            child: Center(
-              child: Text(
-                'Record',
-                style: TextStyle(fontSize: 60),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Column(
+          children: [
+            const Flexible(
+              flex: 1,
+              child: Center(
+                child: AutoSizeText(
+                  'Record',
+                  style: TextStyle(fontSize: 60),
+                ),
               ),
             ),
-          ),
-          Flexible(
-            flex: 2,
-            child: ListView.builder(
-              itemCount: recordTimes.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Center(
-                    child: Text(
-                      '${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}    ${recordTimes[index]}',
-                      style: const TextStyle(fontSize: 30),
+            Flexible(
+              flex: 2,
+              child: ListView.builder(
+                itemCount: recordTimes.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Center(
+                      child: Text(
+                        '${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}    ${recordTimes[index]}',
+                        style: const TextStyle(fontSize: 30),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-          const Flexible(
-            flex: 1,
-            child: Center(
-              child: CustomBackButton(),
+            const Flexible(
+              flex: 1,
+              child: Center(
+                child: CustomBackButton(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
