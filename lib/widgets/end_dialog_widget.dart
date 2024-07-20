@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/home_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/restart_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,14 +9,12 @@ class EndDialog extends StatefulWidget {
   final String playTime;
   final List<String> recordTimes;
   final SharedPreferences prefs;
-  final ButtonStyle buttonStyle;
 
   const EndDialog({
     super.key,
     required this.playTime,
     required this.recordTimes,
     required this.prefs,
-    required this.buttonStyle,
   });
 
   @override
@@ -83,7 +81,6 @@ class _EndDialogState extends State<EndDialog> {
         actionsAlignment: MainAxisAlignment.center,
         actions: [
           RestartButton(
-            buttonStyle: widget.buttonStyle,
             prefs: widget.prefs,
           ),
           const HomeButton(),

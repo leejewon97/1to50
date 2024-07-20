@@ -14,15 +14,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final buttonStyle = ButtonStyle(
-    shape: MaterialStateProperty.all<OutlinedBorder?>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-        side: const BorderSide(color: Colors.black, width: 2.0),
-      ),
-    ),
-  );
-
   late Future<SharedPreferences> prefs;
 
   @override
@@ -41,7 +32,6 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return HomeScreen(
-              buttonStyle: buttonStyle,
               prefs: snapshot.data!,
             );
           } else {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:one_to_fifty/widgets/buttons/home_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/replay_button_widget.dart';
@@ -7,13 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class WhenPausedDialog extends StatelessWidget {
-  final ButtonStyle buttonStyle;
   final SharedPreferences prefs;
   final Ticker ticker;
 
   const WhenPausedDialog({
     super.key,
-    required this.buttonStyle,
     required this.prefs,
     required this.ticker,
   });
@@ -33,7 +31,6 @@ class WhenPausedDialog extends StatelessWidget {
         actionsAlignment: MainAxisAlignment.center,
         actions: [
           RestartButton(
-            buttonStyle: buttonStyle,
             prefs: prefs,
           ),
           const HomeButton(),

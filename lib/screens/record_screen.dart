@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/custom_back_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RecordScreen extends StatelessWidget {
   final SharedPreferences prefs;
-  final ButtonStyle buttonStyle;
 
   const RecordScreen({
     super.key,
     required this.prefs,
-    required this.buttonStyle,
   });
 
   @override
@@ -17,7 +15,6 @@ class RecordScreen extends StatelessWidget {
     final List<String> recordTimes = prefs.getStringList('recordTimes') ?? [];
 
     return Scaffold(
-      backgroundColor: Colors.amber[100],
       body: Column(
         children: [
           const Flexible(
@@ -45,12 +42,10 @@ class RecordScreen extends StatelessWidget {
               },
             ),
           ),
-          Flexible(
+          const Flexible(
             flex: 1,
             child: Center(
-              child: CustomBackButton(
-                buttonStyle: buttonStyle,
-              ),
+              child: CustomBackButton(),
             ),
           ),
         ],

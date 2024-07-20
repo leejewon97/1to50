@@ -1,22 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/play_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/record_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
-  final ButtonStyle buttonStyle;
   final SharedPreferences prefs;
 
   const HomeScreen({
     super.key,
-    required this.buttonStyle,
     required this.prefs,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[100],
       body: Column(
         children: [
           const Flexible(
@@ -39,11 +36,9 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RecordButton(
-                    buttonStyle: buttonStyle,
                     prefs: prefs,
                   ),
                   PlayButton(
-                    buttonStyle: buttonStyle,
                     prefs: prefs,
                   ),
                 ],

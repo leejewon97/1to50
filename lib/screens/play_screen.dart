@@ -11,12 +11,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soundpool/soundpool.dart';
 
 class PlayScreen extends StatefulWidget {
-  final ButtonStyle buttonStyle;
   final SharedPreferences prefs;
 
   const PlayScreen({
     super.key,
-    required this.buttonStyle,
     required this.prefs,
   });
 
@@ -108,7 +106,6 @@ class _PlayScreenState extends State<PlayScreen> {
                 playTime: timeFormatter(playTime),
                 recordTimes: recordTimes,
                 prefs: widget.prefs,
-                buttonStyle: widget.buttonStyle,
               );
             },
           );
@@ -141,7 +138,6 @@ class _PlayScreenState extends State<PlayScreen> {
         builder: (context) {
           return WhenPausedDialog(
             prefs: widget.prefs,
-            buttonStyle: widget.buttonStyle,
             ticker: ticker,
           );
         },
@@ -204,7 +200,6 @@ class _PlayScreenState extends State<PlayScreen> {
                   child: Center(
                     child: ticker.isTicking
                         ? PauseButton(
-                            buttonStyle: widget.buttonStyle,
                             whenPaused: whenPaused,
                           )
                         : const SizedBox.shrink(),

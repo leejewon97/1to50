@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:one_to_fifty/neumorphic_button_style.dart';
 
 class NumberButton extends StatefulWidget {
   final int number;
@@ -37,11 +38,7 @@ class _NumberButtonState extends State<NumberButton> {
           },
           child: NeumorphicButton(
             onPressed: () {},
-            style: NeumorphicStyle(
-              shape: NeumorphicShape.flat,
-              boxShape: NeumorphicBoxShape.roundRect(
-                BorderRadius.circular(20.0),
-              ),
+            style: NeumorphicButtonStyle(
               depth: isPressed ? 0 : 5,
             ),
             padding: EdgeInsets.zero,
