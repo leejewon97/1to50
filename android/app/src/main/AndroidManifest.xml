@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="one_to_fifty"
+        android:label="1 to 50"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
