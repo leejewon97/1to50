@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/play_button_widget.dart';
 import 'package:one_to_fifty/widgets/buttons/record_button_widget.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           const Flexible(
             flex: 2,
             child: Center(
-              child: Text(
+              child: AutoSizeText(
                 '1 to 50',
                 style: TextStyle(fontSize: 60),
               ),

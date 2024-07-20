@@ -24,9 +24,18 @@ class PlayButton extends StatelessWidget {
             ));
       },
       style: NeumorphicButtonStyle(),
-      child: const Icon(
-        Icons.play_arrow_rounded,
-        size: 80,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 80,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Icon(
+              Icons.play_arrow_rounded,
+              size: constraints.maxHeight,
+            );
+          },
+        ),
       ),
     );
   }

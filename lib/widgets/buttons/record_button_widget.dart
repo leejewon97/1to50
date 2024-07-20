@@ -24,9 +24,18 @@ class RecordButton extends StatelessWidget {
             ));
       },
       style: NeumorphicButtonStyle(),
-      child: const Icon(
-        Icons.format_list_numbered_rounded,
-        size: 80,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 80,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Icon(
+              Icons.format_list_numbered_rounded,
+              size: constraints.maxHeight,
+            );
+          },
+        ),
       ),
     );
   }
