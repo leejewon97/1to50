@@ -14,19 +14,22 @@ class PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PlayScreen(
-                prefs: prefs,
-              ),
-            ));
-      },
-      style: NeumorphicButtonStyle(),
-      child: const ResponsiveButtonChild(
-        icon: Icons.play_arrow_rounded,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: NeumorphicButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlayScreen(
+                  prefs: prefs,
+                ),
+              ));
+        },
+        style: NeumorphicButtonStyle(),
+        child: const ResponsiveButtonChild(
+          icon: Icons.play_arrow_rounded,
+        ),
       ),
     );
   }

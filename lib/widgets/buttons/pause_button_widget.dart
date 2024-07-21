@@ -12,11 +12,14 @@ class PauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: whenPaused,
-      style: NeumorphicButtonStyle(),
-      child: const ResponsiveButtonChild(
-        icon: Icons.pause_rounded,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: NeumorphicButton(
+        onPressed: whenPaused,
+        style: NeumorphicButtonStyle(),
+        child: const ResponsiveButtonChild(
+          icon: Icons.pause_rounded,
+        ),
       ),
     );
   }

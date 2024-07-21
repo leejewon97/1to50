@@ -27,34 +27,37 @@ class _HomeNumberButtonState extends State<HomeNumberButton> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxHeight: 90,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SizedBox(
-            width: constraints.maxHeight,
-            child: NeumorphicButton(
-              onPressed: () {
-                soundIds.then((ids) {
-                  soundpool.play(ids['tap']!);
-                });
-              },
-              style: NeumorphicButtonStyle(),
-              padding: EdgeInsets.zero,
-              child: Center(
-                child: Text(
-                  widget.number,
-                  style: TextStyle(
-                    fontSize: constraints.maxHeight / 2,
-                    color: Colors.indigo,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 90,
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SizedBox(
+              width: constraints.maxHeight,
+              child: NeumorphicButton(
+                onPressed: () {
+                  soundIds.then((ids) {
+                    soundpool.play(ids['tap']!);
+                  });
+                },
+                style: NeumorphicButtonStyle(),
+                padding: EdgeInsets.zero,
+                child: Center(
+                  child: Text(
+                    widget.number,
+                    style: TextStyle(
+                      fontSize: constraints.maxHeight / 2,
+                      color: Colors.indigo,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -37,8 +37,17 @@ class RecordScreen extends StatelessWidget {
                   return ListTile(
                     title: Center(
                       child: Text(
-                        '${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}    ${recordTimes[index]}',
-                        style: const TextStyle(fontSize: 30),
+                        '${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}\t${recordTimes[index]}',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: index == 0
+                              ? Colors.indigoAccent
+                              : index == 1
+                                  ? Colors.indigo
+                                  : index == 2
+                                      ? Colors.indigo[900]
+                                      : Colors.black,
+                        ),
                       ),
                     ),
                   );

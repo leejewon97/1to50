@@ -14,19 +14,22 @@ class RecordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RecordScreen(
-                prefs: prefs,
-              ),
-            ));
-      },
-      style: NeumorphicButtonStyle(),
-      child: const ResponsiveButtonChild(
-        icon: Icons.format_list_numbered_rounded,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: NeumorphicButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecordScreen(
+                  prefs: prefs,
+                ),
+              ));
+        },
+        style: NeumorphicButtonStyle(),
+        child: const ResponsiveButtonChild(
+          icon: Icons.format_list_numbered_rounded,
+        ),
       ),
     );
   }

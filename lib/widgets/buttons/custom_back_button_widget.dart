@@ -9,13 +9,16 @@ class CustomBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      style: NeumorphicButtonStyle(),
-      child: const ResponsiveButtonChild(
-        icon: Icons.arrow_back_rounded,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: NeumorphicButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        style: NeumorphicButtonStyle(),
+        child: const ResponsiveButtonChild(
+          icon: Icons.arrow_back_rounded,
+        ),
       ),
     );
   }
