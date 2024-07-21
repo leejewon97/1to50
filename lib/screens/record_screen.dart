@@ -31,27 +31,52 @@ class RecordScreen extends StatelessWidget {
             ),
             Flexible(
               flex: 2,
-              child: ListView.builder(
-                itemCount: recordTimes.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Center(
-                      child: Text(
-                        '${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}\t${recordTimes[index]}',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: index == 0
-                              ? Colors.indigoAccent
-                              : index == 1
-                                  ? Colors.indigo
-                                  : index == 2
-                                      ? Colors.indigo[900]
-                                      : Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: ListView.builder(
+                  itemCount: recordTimes.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "${index == 0 ? '1st' : index == 1 ? '2nd' : index == 2 ? '3rd' : '${index + 1}th'}${recordTimes[index].contains('\t') ? '\t${recordTimes[index].split('\t')[0]}' : ''}",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  color: index == 0
+                                      ? Colors.indigoAccent
+                                      : index == 1
+                                          ? Colors.indigo
+                                          : index == 2
+                                              ? Colors.indigo[900]
+                                              : Colors.black,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              recordTimes[index].contains('\t')
+                                  ? recordTimes[index].split('\t')[1]
+                                  : recordTimes[index],
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: index == 0
+                                    ? Colors.indigoAccent
+                                    : index == 1
+                                        ? Colors.indigo
+                                        : index == 2
+                                            ? Colors.indigo[900]
+                                            : Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
             const Flexible(
