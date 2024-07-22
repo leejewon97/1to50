@@ -81,11 +81,12 @@ class _PlayScreenState extends State<PlayScreen> {
 
   String timeFormatter(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
     final centiseconds =
         twoDigits(duration.inMilliseconds.remainder(1000) ~/ 10);
-    return "$minutes:$seconds:$centiseconds";
+    return "${duration.inHours > 0 ? "$hours:" : ""}$minutes:$seconds:$centiseconds";
   }
 
   void onNumberTapDown(int index) {

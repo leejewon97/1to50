@@ -39,6 +39,9 @@ class _EndDialogState extends State<EndDialog> {
   }
 
   Future<void> updateRecordTimes() async {
+    if (playerName.contains("\t")) {
+      return;
+    }
     await widget.prefs.setStringList(
         'recordTimes',
         [
@@ -92,8 +95,10 @@ class _EndDialogState extends State<EndDialog> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: '이름을 입력하세요',
+                    errorText:
+                        playerName.contains("\t") ? '허용되지 않은 입력입니다' : null,
                   ),
                   onChanged: (value) async {
                     setState(() {
