@@ -3,7 +3,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/widgets/buttons/custom_back_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RecordScreen extends StatelessWidget {
+class RecordScreen extends StatefulWidget {
   final SharedPreferences prefs;
 
   const RecordScreen({
@@ -12,8 +12,21 @@ class RecordScreen extends StatelessWidget {
   });
 
   @override
+  State<RecordScreen> createState() => _RecordScreenState();
+}
+
+class _RecordScreenState extends State<RecordScreen> {
+  @override
   Widget build(BuildContext context) {
-    final List<String> recordTimes = prefs.getStringList('recordTimes') ?? [];
+    final List<String> recordTimes =
+        widget.prefs.getStringList('recordTimes') ?? [];
+
+    Future<void> deleteRecord(int index) async {
+      setState(() {
+        recordTimes.removeAt(index);
+      });
+      await widget.prefs.setStringList('recordTimes', recordTimes);
+    }
 
     return PopScope(
       canPop: false,
@@ -58,6 +71,10 @@ class RecordScreen extends StatelessWidget {
                                       ? recordTimes[index].split('\t')[1]
                                       : recordTimes[index],
                                   style: recordStyle,
+                                ),
+                                IconButton(
+                                  onPressed: () => deleteRecord(index),
+                                  icon: const Icon(Icons.delete),
                                 ),
                               ],
                             );

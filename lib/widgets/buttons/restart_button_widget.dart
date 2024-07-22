@@ -16,12 +16,13 @@ class RestartButton extends StatelessWidget {
       onPressed: () {
         Navigator.pop(context);
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PlayScreen(
-                prefs: prefs,
-              ),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayScreen(
+              prefs: prefs,
+            ),
+          ),
+        );
       },
       icon: const Icon(
         Icons.refresh_rounded,
