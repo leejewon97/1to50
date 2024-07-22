@@ -28,7 +28,7 @@ class _HomeNumberButtonState extends State<HomeNumberButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           maxHeight: 90,

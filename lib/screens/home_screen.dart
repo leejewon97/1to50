@@ -31,14 +31,9 @@ class HomeScreen extends StatelessWidget {
                   HomeNumberButton(
                     number: '1',
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 32,
-                    ),
-                    child: AutoSizeText(
-                      'to',
-                      style: TextStyle(fontSize: 60),
-                    ),
+                  AutoSizeText(
+                    'to',
+                    style: TextStyle(fontSize: 60),
                   ),
                   HomeNumberButton(
                     number: '50',
