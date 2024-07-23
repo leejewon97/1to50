@@ -22,18 +22,17 @@ class EndDialog extends StatefulWidget {
 
 class _EndDialogState extends State<EndDialog> {
   bool isBestTime = false;
-  String newBestTime = "";
-  String oldBestTime = "";
+  String bestTime = "";
   String playerName = "";
 
   @override
   void initState() {
     super.initState();
-    oldBestTime = widget.recordTimes.firstOrNull ?? widget.playTime;
-    newBestTime = oldBestTime;
-    if (widget.playTime.compareTo(oldBestTime) <= 0) {
+    bestTime = widget.recordTimes.firstOrNull ?? widget.playTime;
+    bestTime = bestTime.contains("\t") ? bestTime.split("\t")[1] : bestTime;
+    if (widget.playTime.compareTo(bestTime) <= 0) {
       isBestTime = true;
-      newBestTime = widget.playTime;
+      bestTime = widget.playTime;
     }
     updateRecordTimes();
   }
@@ -77,7 +76,7 @@ class _EndDialogState extends State<EndDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '최고 기록 : $newBestTime',
+                '최고 기록 : $bestTime',
                 style: const TextStyle(
                   fontSize: 16,
                 ),
