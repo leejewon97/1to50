@@ -50,12 +50,13 @@ class _RecordScreenState extends State<RecordScreen> {
                   itemCount: recordTimes.length,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      contentPadding: EdgeInsets.zero,
                       title: Center(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
                             final recordStyle = RecordStyle(
                               recordIndex: index,
-                              recordSize: constraints.maxWidth / 12,
+                              recordSize: constraints.maxWidth / 13,
                             );
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,9 +73,9 @@ class _RecordScreenState extends State<RecordScreen> {
                                       : recordTimes[index],
                                   style: recordStyle,
                                 ),
-                                IconButton(
+                                DeleteButton(
+                                  constraints: constraints,
                                   onPressed: () => deleteRecord(index),
-                                  icon: const Icon(Icons.delete),
                                 ),
                               ],
                             );
@@ -93,6 +94,32 @@ class _RecordScreenState extends State<RecordScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DeleteButton extends StatelessWidget {
+  final BoxConstraints constraints;
+  final VoidCallback onPressed;
+
+  const DeleteButton({
+    super.key,
+    required this.constraints,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: constraints.maxWidth / 12,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
+        icon: Icon(
+          Icons.delete_forever_outlined,
+          size: constraints.maxWidth / 12,
         ),
       ),
     );
