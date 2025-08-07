@@ -21,6 +21,32 @@ class PlayService {
     await _tapPlayer.setAsset(_tapSound);
     await _wrongPlayer.setAsset(_wrongSound);
     await _countdownPlayer.setAsset(_countdownSound);
+    
+    await _tapPlayer.load();
+    await _wrongPlayer.load();
+    await _countdownPlayer.load();
+    
+    await _preloadAudio();
+  }
+
+  static Future<void> _preloadAudio() async {
+    await _tapPlayer.setVolume(0.0);
+    await _wrongPlayer.setVolume(0.0);
+    await _countdownPlayer.setVolume(0.0);
+
+    await _tapPlayer.play();
+    await _wrongPlayer.play();
+    await _countdownPlayer.play();
+
+    await Future.delayed(const Duration(milliseconds: 50));
+
+    await _tapPlayer.stop();
+    await _wrongPlayer.stop();
+    await _countdownPlayer.stop();
+
+    await _tapPlayer.setVolume(1.0);
+    await _wrongPlayer.setVolume(1.0);
+    await _countdownPlayer.setVolume(1.0);
   }
 
   static Future<void> playTap() async {
