@@ -3,6 +3,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:one_to_fifty/services/play_service.dart';
+import 'package:one_to_fifty/services/ad_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,7 @@ Future<void> main() async {
     [DeviceOrientation.portraitUp],
   );
   await PlayService.initialize();
+  await AdService.initialize();
   runApp(const MyApp());
 }
 

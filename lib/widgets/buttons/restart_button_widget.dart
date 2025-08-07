@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/screens/play_screen.dart';
+import 'package:one_to_fifty/services/ad_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RestartButton extends StatelessWidget {
@@ -13,16 +14,24 @@ class RestartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PlayScreen(
-              prefs: prefs,
+      onPressed: () async {
+        await AdService.incrementPlayCount(prefs);
+        final shouldShowAd = await AdService.shouldShowAd(prefs);
+        if (shouldShowAd) {
+          await AdService.showInterstitialAd();
+        }
+
+        if (context.mounted) {
+          Navigator.pop(context);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlayScreen(
+                prefs: prefs,
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
       icon: const Icon(
         Icons.refresh_rounded,

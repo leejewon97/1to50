@@ -13,7 +13,7 @@ class Conutdown extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          backgroundColor: Colors.black.withOpacity(0.25),
+          backgroundColor: Colors.black.withValues(alpha: 0.25),
           body: Center(
             child: Text(
               '${countdown.inSeconds}',
