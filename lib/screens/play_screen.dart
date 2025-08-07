@@ -8,7 +8,6 @@ import 'package:one_to_fifty/widgets/end_dialog_widget.dart';
 import 'package:one_to_fifty/widgets/number_buttons_builder_widget.dart';
 import 'package:one_to_fifty/widgets/when_paused_dialog_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:soundpool/soundpool.dart';
 
 class PlayScreen extends StatefulWidget {
   final SharedPreferences prefs;
@@ -23,8 +22,8 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> {
-  final List<int> firstNumbers = PlayService().getRandomNumbers(1);
-  final List<int> secondNumbers = PlayService().getRandomNumbers(2);
+  final List<int> firstNumbers = PlayService.getRandomNumbers(1);
+  final List<int> secondNumbers = PlayService.getRandomNumbers(2);
   late List<int> numbers;
   int currentNumber = 1;
 
@@ -36,9 +35,6 @@ class _PlayScreenState extends State<PlayScreen> {
   Duration countdown = const Duration(seconds: 4);
 
   List<String> recordTimes = [];
-
-  Soundpool soundpool = Soundpool.fromOptions();
-  late Future<Map<String, int>> soundIds;
 
   @override
   void initState() {
@@ -54,11 +50,8 @@ class _PlayScreenState extends State<PlayScreen> {
       }
     });
 
-    soundIds = PlayService().getSoundIds(soundpool);
-    soundIds.then((ids) {
-      soundpool.play(ids['countdown']!);
-      ticker.start();
-    });
+    PlayService.playCountdown();
+    ticker.start();
 
     recordTimes = widget.prefs.getStringList('recordTimes') ?? [];
   }
@@ -117,13 +110,9 @@ class _PlayScreenState extends State<PlayScreen> {
           currentNumber++;
         }
       });
-      soundIds.then((ids) {
-        soundpool.play(ids['tap']!);
-      });
+      PlayService.playTap();
     } else {
-      soundIds.then((ids) {
-        soundpool.play(ids['wrong']!);
-      });
+      PlayService.playWrong();
     }
   }
 

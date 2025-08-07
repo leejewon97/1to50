@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:one_to_fifty/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:one_to_fifty/services/play_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +12,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
+  await PlayService.initialize();
   runApp(const MyApp());
 }
 
@@ -28,6 +30,12 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     prefs = SharedPreferences.getInstance();
+  }
+
+  @override
+  void dispose() {
+    PlayService.dispose();
+    super.dispose();
   }
 
   // This widget is the root of your application.

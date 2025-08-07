@@ -1,8 +1,15 @@
-import 'package:flutter/services.dart';
-import 'package:soundpool/soundpool.dart';
+import 'package:just_audio/just_audio.dart';
 
 class PlayService {
-  List<int> getRandomNumbers(int wave) {
+  static const String _tapSound = 'assets/sounds/tap.mp3';
+  static const String _wrongSound = 'assets/sounds/wrong.mp3';
+  static const String _countdownSound = 'assets/sounds/countdown.wav';
+
+  static final AudioPlayer _tapPlayer = AudioPlayer();
+  static final AudioPlayer _wrongPlayer = AudioPlayer();
+  static final AudioPlayer _countdownPlayer = AudioPlayer();
+
+  static List<int> getRandomNumbers(int wave) {
     if (wave == 1) {
       return List.generate(25, (index) => index + 1)..shuffle();
     } else {
@@ -10,16 +17,30 @@ class PlayService {
     }
   }
 
-  Future<Map<String, int>> getSoundIds(Soundpool soundpool) async {
-    return {
-      'tap': await loadSound('assets/sounds/tap.mp3', soundpool),
-      'wrong': await loadSound('assets/sounds/wrong.mp3', soundpool),
-      'countdown': await loadSound('assets/sounds/countdown.wav', soundpool),
-    };
+  static Future<void> initialize() async {
+    await _tapPlayer.setAsset(_tapSound);
+    await _wrongPlayer.setAsset(_wrongSound);
+    await _countdownPlayer.setAsset(_countdownSound);
   }
 
-  Future<int> loadSound(String file, Soundpool soundpool) async {
-    var soundData = await rootBundle.load(file);
-    return await soundpool.load(soundData);
+  static Future<void> playTap() async {
+    await _tapPlayer.seek(Duration.zero);
+    await _tapPlayer.play();
+  }
+
+  static Future<void> playWrong() async {
+    await _wrongPlayer.seek(Duration.zero);
+    await _wrongPlayer.play();
+  }
+
+  static Future<void> playCountdown() async {
+    await _countdownPlayer.seek(Duration.zero);
+    await _countdownPlayer.play();
+  }
+
+  static void dispose() {
+    _tapPlayer.dispose();
+    _wrongPlayer.dispose();
+    _countdownPlayer.dispose();
   }
 }
