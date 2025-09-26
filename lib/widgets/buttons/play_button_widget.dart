@@ -21,19 +21,24 @@ class PlayButton extends StatelessWidget {
         onPressed: () async {
           await AdService.incrementPlayCount(prefs);
           final shouldShowAd = await AdService.shouldShowAd(prefs);
-          if (shouldShowAd) {
-            await AdService.showInterstitialAd();
-          }
-
-          if (context.mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PlayScreen(
-                  prefs: prefs,
+          
+          void navigateToPlayScreen() {
+            if (context.mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlayScreen(
+                    prefs: prefs,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
+          }
+          
+          if (shouldShowAd) {
+            await AdService.showInterstitialAd(navigateToPlayScreen);
+          } else {
+            navigateToPlayScreen();
           }
         },
         style: NeumorphicButtonStyle(),

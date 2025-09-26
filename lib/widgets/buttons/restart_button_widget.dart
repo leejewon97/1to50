@@ -17,20 +17,25 @@ class RestartButton extends StatelessWidget {
       onPressed: () async {
         await AdService.incrementPlayCount(prefs);
         final shouldShowAd = await AdService.shouldShowAd(prefs);
-        if (shouldShowAd) {
-          await AdService.showInterstitialAd();
-        }
-
-        if (context.mounted) {
-          Navigator.pop(context);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PlayScreen(
-                prefs: prefs,
+        
+        void restartPlayScreen() {
+          if (context.mounted) {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlayScreen(
+                  prefs: prefs,
+                ),
               ),
-            ),
-          );
+            );
+          }
+        }
+        
+        if (shouldShowAd) {
+          await AdService.showInterstitialAd(restartPlayScreen);
+        } else {
+          restartPlayScreen();
         }
       },
       icon: const Icon(

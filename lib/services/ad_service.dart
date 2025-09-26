@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +28,14 @@ class AdService {
     await MobileAds.instance.initialize();
   }
 
-  static Future<void> showInterstitialAd() async {
+  static Future<void> showInterstitialAd(VoidCallback onAdClosed) async {
+    await _loadInterstitialAdWithRetry(onAdClosed, 2);
+  }
+
+  static Future<void> _loadInterstitialAdWithRetry(
+    VoidCallback onAdClosed,
+    int retryCount,
+  ) async {
     await InterstitialAd.load(
       adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
@@ -36,15 +44,22 @@ class AdService {
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
+              onAdClosed();
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
+              onAdClosed();
             },
           );
           ad.show();
         },
-        onAdFailedToLoad: (error) {
-          // 광고 로딩 실패 시, 후처리할 예정
+        onAdFailedToLoad: (error) async {
+          if (retryCount > 0) {
+            await Future.delayed(const Duration(seconds: 1));
+            await _loadInterstitialAdWithRetry(onAdClosed, retryCount - 1);
+          } else {
+            onAdClosed();
+          }
         },
       ),
     );
